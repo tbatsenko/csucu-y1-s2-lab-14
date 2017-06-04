@@ -1,24 +1,27 @@
 class Board(object):
     """docstring for Board."""
-    EMPTY_CELL = 0
-    O_CELL = 1
-    X_CELL = 2
-    X_winns = 3
-    O_winns = 4
-    DRAW = 5
-    NOT_ENDED = 6
+    EMPTY_CELL = " "
+
+    # O_CELL = 1
+    # X_CELL = 2
+    # X_winns = 3
+    # O_winns = 4
+    # DRAW = 5
+    # NOT_ENDED = 6
     COMBINATIONS = (((0, 0), (0, 1), (0, 2)), ((1, 0), (1, 1), (1, 2)),
                     ((2, 0), (2, 1), (2, 2)), ((0, 2), (1, 2), (2, 2)),
                     ((0, 0), (1, 0), (2, 0)), ((0, 1), (1, 1), (2, 1)),
                     ((0, 0), (1, 1), (2, 2)), ((0, 2), (1, 1), (2, 0)))
 
     def __init__(self):
-        self._field = [[EMPTY_CELL]*3]*3
+        self._field = [[Board.EMPTY_CELL]*3]*3
+        self._lastMove = None
 
     def put(self, turn, coord):
         """put an X or O to the board"""
-        if self._field[coord[0][1]] == EMPTY_CELL:
+        if self._field[coord[0][1]] == Board.EMPTY_CELL:
             self._field[coord[0][1]].append(turn)
+            self._lastMove = (turn, coord)
             return True
         else:
             return False
@@ -34,4 +37,4 @@ class Board(object):
                 winner = get_value(comb[0])
         if counter > 0:
             return winner
-        return NOT_ENDED
+        return None
