@@ -16,6 +16,7 @@ class Board(object):
         self._field = [[EMPTY_CELL]*3]*3
 
     def put(self, turn, coord):
+        """put an X or O to the board"""
         if self._field[coord[0][1]] == EMPTY_CELL:
             self._field[coord[0][1]].append(turn)
             return True
@@ -23,6 +24,7 @@ class Board(object):
             return False
 
     def check_winner(self):
+        """check if there is a winner"""
         def get_value(coord):
             return self._field[coord[0]][coord[1]]
         couter = 0
@@ -33,6 +35,3 @@ class Board(object):
         if counter > 0:
             return winner
         return NOT_ENDED
-
-
-if __name__ = "__main__":

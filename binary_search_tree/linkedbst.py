@@ -7,7 +7,7 @@ from abstractcollection import AbstractCollection
 from bstnode import BSTNode
 from linkedstack import LinkedStack
 from linkedqueue import LinkedQueue
-from math import log
+from math import log2
 
 
 class LinkedBST(AbstractCollection):
@@ -239,12 +239,26 @@ class LinkedBST(AbstractCollection):
             :param top:
             :return:
             '''
+            if top is None:
+                return 0
+            else:
+                return 1 + max(height1(top.left), height1(top.right))
+        return height1(self._root)
+
 
     def isBalanced(self):
         '''
         Return True if tree is balanced
         :return:
         '''
+        n = 0
+        for i in self.inorder():
+            n += 1
+        tree_height = self.height()
+        if tree_height < 2*log2(n):
+            return True
+        return False
+
 
     def rangeFind(self, low, high):
         '''
@@ -252,13 +266,47 @@ class LinkedBST(AbstractCollection):
         :param low:
         :param high:
         :return:
+        Метод rangeFind. Метод повинен отримати два елементи, як аргументи при виклику, для
+визначення меж пошуку в дереві. Метод повинен повертати список елементів, які будуть знайдені
+в заданих межах при обході дерева.
         '''
+        # def recurse(node):
+        #     lst = []
+        #     if node != None:
+        #         if node < low:
+        #             recurse(node.right)
+        #         else:
+        #
+        #         recurse(node.left)
+        #         lyst.append(node.data)
+        #         recurse(node.right)
+        #
+        # recurse(self._root)
+        previous = None
+        lst = []
+        for node in self.inorder():
+            if node in range(low, high+1):
+                lst.append(node)
+        return lst
 
     def rebalance(self):
         '''
         Rebalances the tree.
         :return:
         '''
+        bst_list = list()
+        for node in self.inorder():
+            bst_list.append(node)
+        self.clear()
+
+        def balance_add(lst):
+            while lst != []:
+                mid_item = lst[len(lst)//2]
+                self.add(mid_item)
+                lst.remove(mid_item)
+
+        balance_add(bst_list)
+
 
     def successor(self, item):
         """
@@ -269,6 +317,36 @@ class LinkedBST(AbstractCollection):
         :return:
         :rtype:
         """
+        # def recurse(node):
+        #     # New item is less, go left until spot is found
+        #     if item < node.data:
+        #         if node.left == None:
+        #             node.left = BSTNode(item)
+        #         else:
+        #             recurse(node.left)
+        #     # New item is greater or equal,
+        #     # go right until spot is found
+        #     elif node.right == None:
+        #         node.right = BSTNode(item)
+        #     else:
+        #         recurse(node.right)
+        #         # End of recurse
+        #
+        # # Tree is empty, so new item goes at the root
+        # if self.isEmpty():
+        #     self._root = BSTNode(item)
+        # # Otherwise, search for the item's spot
+        # else:
+        #     recurse(self._root)
+        # self._size += 1
+        previous = None
+        for node in self.inorder():
+            if item > node:
+                continue
+            else:
+                return node
+
+
 
     def predecessor(self, item):
         """
@@ -279,3 +357,12 @@ class LinkedBST(AbstractCollection):
         :return:
         :rtype:
         """
+        previous = None
+        for node in self.inorder():
+            if item > node:
+                previous = node
+                continue
+            else:
+                if previous:
+                    return previous
+                return node
