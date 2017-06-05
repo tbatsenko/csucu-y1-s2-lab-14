@@ -5,4 +5,4 @@
 - Task two accomplished in binary_search_tree/search_time_test.py
 
 # Tic-Tac-Toe game
-- Task three accomplished in game/game.py
+- Task three accomplished in Tic-Tac-Toe/game.py
