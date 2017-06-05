@@ -1,3 +1,8 @@
+"""
+File: funcs.py
+This module includes functions used in game.py
+"""
+
 def get_valid_input(input_str, valid_options):
     """
     (str), (str) -> (str)
@@ -12,32 +17,27 @@ def get_valid_input(input_str, valid_options):
         resp = input(input_str)
     return resp
 
-def displayBoard(board):
-    s = "\n"
-    s += "                    0     1     2\n\n"
-    for i in range(3):
-        for j in range(3):
-            if j == 1:
-                s += "|  " + str(board._field[i][j]) + "  |"
-            elif j == 0:
-                s += "               " + str(i) + "    " + str(board._field[i][j]) + "  "
-            else:
-                s += "  " + str(board._field[i][j]) + " "
-        if i < 2:
-            s += "\n                  ------------------\n"
-    print(s)
 
 def userMakeMove(user_turn, board):
+    """
+    (str), (Board) -> None
+    This function handles user move
+    :param user_turn: a str represents user figure(X or O)
+    :param board: Board class inctance represents the Game Board
+    :return: None
+    """
     print("\nIt's your turn to make a move!")
+
     coord = input("Please type the coord below - first row, then col: ")
-    coord = [int(i) for i in coord.split()]
-    coord = (coord[0], coord[1])
-    print(coord)
+    try:
+        coord = tuple([int(i) for i in coord.split()])
+    except:
+        pass
+
     if coord in board.availible_cells:
         if board.put(user_turn, coord):
             pass
         else:
-
             print("Your move is not valid, please, try again.\n")
             userMakeMove(user_turn, board)
     else:

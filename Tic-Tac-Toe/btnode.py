@@ -4,3 +4,4 @@ class BTNode(object):
         self.left = None
         self.right = None
         self.value = value
+        self.sum = 0

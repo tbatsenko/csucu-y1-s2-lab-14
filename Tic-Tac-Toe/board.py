@@ -19,6 +19,21 @@ class Board(object):
         self.availible_cells = [(0, 0), (0, 1), (0, 2), (1, 0),
                             (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
 
+    def __str__(self):
+        s = "\n"
+        s += "                    0     1     2\n\n"
+        for i in range(3):
+            for j in range(3):
+                if j == 1:
+                    s += "|  " + str(self._field[i][j]) + "  |"
+                elif j == 0:
+                    s += "               " + str(i) + "    " + str(self._field[i][j]) + "  "
+                else:
+                    s += "  " + str(self._field[i][j]) + " "
+            if i < 2:
+                s += "\n                  ------------------\n"
+        return s
+
     def put(self, turn, coord):
         """put an X or O to the board"""
         row = coord[0]
