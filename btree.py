@@ -33,13 +33,7 @@ class BTree(object):
             self._add(value, self.root)
 
     def _add(self, value, node):
-        if value < node.value:
-            if node.left != None:
-                self._add(value, node.left)
-            else:
-                node.left = BTNode(value)
-        else:
-            if node.right != None:
-                self._add(value, node.right)
-            else:
-                node.right = BTNode(value)
+        if node.left == None:
+            node.left = BTNode(value)
+        elif node.right == None:
+            node.right = BTNode(value)

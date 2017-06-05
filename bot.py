@@ -17,4 +17,5 @@ class Bot(object):
                 moveMade = True
 
     def make_decision(self):
-        decision_tree.root.right.value = 
+        # decision_tree.root.right.value =
+        pass
